@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Pets } from 'src/app/pets';
+
 import { HttpClientModule } from '@angular/common/http';
-import { PetServiceService } from 'src/app/services/pet-service.service';
+import { Pets } from 'src/app/services/pet-service.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 @Component({
   selector: 'app-pets',
@@ -10,18 +10,19 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class PetsComponent implements OnInit {
   petForm!: FormGroup;
-
   response!: string;
+
   constructor(private formBuilder: FormBuilder, private petService:
 
-    PetServiceService){ }
+    Pets){ }
 
   ngOnInit(): void {
     this.petForm = this.formBuilder.group({
 
       petId: ['', Validators.required],
-      
+     
       });
+    this.onLoad();
   }
   onSubmit() {
 
@@ -42,5 +43,11 @@ export class PetsComponent implements OnInit {
     })
     
     }
+  onLoad(){
+    this.petService.getPets().subscribe({
+      next: (data:any)=>{this.response = data;},
+      error: (error:any)=>{this.response = error.error;}
+    })
+  }
 
 }

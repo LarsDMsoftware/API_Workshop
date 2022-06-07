@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { PetsComponent } from './components/pets/pets.component';
 import { HttpClientModule } from '@angular/common/http';
-import { PetServiceService } from './services/pet-service.service';
+
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
@@ -17,7 +17,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    PetServiceService,
     FormsModule,
     ReactiveFormsModule
   ],
