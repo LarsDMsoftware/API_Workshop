@@ -8,10 +8,7 @@ from rest_framework import status
 """
 TODO 
 GET: Name, Availability, Age
-
 PUT: Updated based off ID
-DELETE: Delete based off ID
-
 """
 
 
@@ -65,6 +62,17 @@ def delete_pet(request, id):
         except:
             return Response('No Pet found with such ID', status=status.HTTP_404_NOT_FOUND)
     return Response("Unable to process request", status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['PUT'])
+def put_pet(request,id):
+    if request.method == 'PUT':
+        try:
+            # Look for pet based on ID, if it does not exist you create the pet. 
+            # If the pet is found you update it with the data provided in the request.
+            pet = Pet.objects.update_or_create()
+        except:
+            return Response("Unable to process request", status=status.HTTP_400_BAD_REQUEST)
+    return 'Wrong Request Method used.'
     
 
 # Create your views here.
