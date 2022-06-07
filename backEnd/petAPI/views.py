@@ -25,17 +25,35 @@ def get_pet_list(request):
     return "No Pets Found."
 
 
-@api_view(['GET'])
-def get_pet_by_ID(request, id):
+@api_view(['GET', 'PUT', 'DELETE'])
+def pet_by_ID(request, id):
     """
     List The Pet with the given ID.
     """
 
     if request.method == 'GET':
-        pets = Pet.objects.filter(id=request.data["id"]).get()
-        serializer = PetSerializer(pets, many=True)
-        return Response(serializer.data)
-    return "No Pets Found this ID: " + id
+        try:
+            pets = Pet.objects.filter(id=request.data["id"]).get()
+            serializer = PetSerializer(pets, many=True)
+            return Response(serializer.data)
+        except:
+            return "No Pets Found this ID: " + id
+    elif request.method == 'PUT':
+        try:
+            # Look for pet based on ID, if it does not exist you create the pet. 
+            # If the pet is found you update it with the data provided in the request.
+            pet = Pet.objects.update_or_create()
+        except:
+            return Response("Unable to process request", status=status.HTTP_400_BAD_REQUEST)
+    elif request.method == 'DELETE':
+        try:
+            pet = Pet.objects.filter(id = id).get()
+            pet.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        except:
+            return Response('No Pet found with such ID', status=status.HTTP_404_NOT_FOUND)
+            
+    return Response("Unable to process request", status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['POST'])
 def post_pet(request):
@@ -52,26 +70,11 @@ def post_pet(request):
     return request
 
 
-@api_view(['DELETE'])
-def delete_pet(request, id):
-    if request.method == 'DELETE':
-        try:
-            pet = Pet.objects.filter(id = id).get()
-            pet.delete()
-            return Response(status=status.HTTP_204_NO_CONTENT)
-        except:
-            return Response('No Pet found with such ID', status=status.HTTP_404_NOT_FOUND)
-    return Response("Unable to process request", status=status.HTTP_400_BAD_REQUEST)
+    
 
 @api_view(['PUT'])
 def put_pet(request,id):
-    if request.method == 'PUT':
-        try:
-            # Look for pet based on ID, if it does not exist you create the pet. 
-            # If the pet is found you update it with the data provided in the request.
-            pet = Pet.objects.update_or_create()
-        except:
-            return Response("Unable to process request", status=status.HTTP_400_BAD_REQUEST)
+    
     return 'Wrong Request Method used.'
     
 
