@@ -24,7 +24,7 @@ export class PetsComponent implements OnInit {
       });
     this.onLoad();
   }
-  onSubmit() {
+  getId() {
 
     this.petService.getPetById(this.petForm.get('petId')?.value) .subscribe({
     
@@ -43,6 +43,25 @@ export class PetsComponent implements OnInit {
     })
     
     }
+    getName() {
+
+      this.petService.getPetByName(this.petForm.get('petName')?.value) .subscribe({
+      
+      next: (data: any) => {
+      
+      this.response = data;
+      
+      },
+      
+      error: (error: any) => {
+      
+      this.response = error.error;
+      
+      }
+      
+      })
+      
+      }
   onLoad(){
     this.petService.getPets().subscribe({
       next: (data:any)=>{this.response = data;},
