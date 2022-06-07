@@ -15,10 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from petAPI.views import *
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('petAPI.urls')),
+    path('pet/<str:id>/',pet_by_ID),
+    path('pet/', get_pet_list),
 
 ]

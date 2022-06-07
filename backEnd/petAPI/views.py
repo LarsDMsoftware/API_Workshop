@@ -28,7 +28,7 @@ def get_pet_list(request):
 @api_view(['GET', 'PUT', 'DELETE'])
 def pet_by_ID(request, id):
     """
-    List The Pet with the given ID.
+    Processes data about Pet with given ID - GET, PUT, DELETE
     """
 
     if request.method == 'GET':
