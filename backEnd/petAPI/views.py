@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from backEnd.petAPI.models import Pet
-from backEnd.petAPI.serializers import *
+from . import models
+from . import serializers
 from rest_framework import status
 
 """
@@ -19,8 +19,8 @@ def get_pet_list(request):
     """
 
     if request.method == 'GET':
-        pets = Pet.objects.all()
-        serializer = PetSerializer(pets, many=True)
+        pets = models.Pet.objects.all()
+        serializer = serializers.PetSerializer(pets, many=True)
         return Response(serializer.data)
     return "No Pets Found."
 
@@ -33,8 +33,8 @@ def pet_by_ID(request, id):
 
     if request.method == 'GET':
         try:
-            pets = Pet.objects.filter(id=request.data["id"]).get()
-            serializer = PetSerializer(pets, many=True)
+            pets = models.Pet.objects.filter(id=request.data["id"]).get()
+            serializer = serializers.PetSerializer(pets, many=True)
             return Response(serializer.data)
         except:
             return "No Pets Found this ID: " + id
@@ -42,12 +42,12 @@ def pet_by_ID(request, id):
         try:
             # Look for pet based on ID, if it does not exist you create the pet. 
             # If the pet is found you update it with the data provided in the request.
-            pet = Pet.objects.update_or_create()
+            pet = models.Pet.objects.update_or_create()
         except:
             return Response("Unable to process request", status=status.HTTP_400_BAD_REQUEST)
     elif request.method == 'DELETE':
         try:
-            pet = Pet.objects.filter(id = id).get()
+            pet = models.Pet.objects.filter(id = id).get()
             pet.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)
         except:
@@ -62,7 +62,7 @@ def post_pet(request):
     """
 
     if request.method == 'POST':
-        serializer = PetSerializer(data=request.data)
+        serializer = serializers.PetSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
