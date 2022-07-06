@@ -6,6 +6,7 @@
     background-color: var(--secondary-color);
     border:none;
     color:white;
+    margin-bottom: 2rem;
 }
 .btn:hover, .btn:focus{
     background-color: var(--main-color);
@@ -15,7 +16,7 @@
     margin-top: 5rem;
 }
 .form-group{
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
 }
 .btn:disabled{
     background-color:#babbbb;
