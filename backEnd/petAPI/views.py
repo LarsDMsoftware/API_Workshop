@@ -9,6 +9,7 @@ from rest_framework import status
 TODO 
 GET: Name, Availability, Age
 PUT: Updated based off ID
+DTO Design to filter out information that does not need to be send to front-end
 """
 
 
@@ -26,7 +27,7 @@ def get_pet_list(request):
 
 
 @api_view(['GET', 'PUT', 'DELETE'])
-def get_pet_by_ID(request, id):
+def pet_by_ID(request, id):
     """
     Processes data about Pet with given ID - GET, PUT, DELETE
     """
