@@ -26,7 +26,7 @@ def get_pet_list(request):
 
 
 @api_view(['GET', 'PUT', 'DELETE'])
-def pet_by_ID(request, id):
+def get_pet_by_ID(request, id):
     """
     Processes data about Pet with given ID - GET, PUT, DELETE
     """
@@ -40,11 +40,20 @@ def pet_by_ID(request, id):
             return "No Pets Found this ID: " + id
     elif request.method == 'PUT':
         try:
-            # Look for pet based on ID, if it does not exist you create the pet. 
-            # If the pet is found you update it with the data provided in the request.
-            pet = Pet.objects.update_or_create()
+            pet = pet.objects.filter(id = id).get()
+            serializer = PetSerializer(data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_200_OK)
         except:
-            return Response("Unable to process request", status=status.HTTP_400_BAD_REQUEST)
+            serializer = PetSerializer(data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        return Response("Unable to precess request", status=status.HTTP_400_BAD_REQUEST)
+
     elif request.method == 'DELETE':
         try:
             pet = Pet.objects.filter(id = id).get()
@@ -71,11 +80,16 @@ def post_pet(request):
 
 
     
-
+"""
 @api_view(['PUT'])
-def put_pet(request,id):
+def put_pet_by_id(request,id):
+    
+    Create or updates a pet and stores it in the database
+    
+
     
     return 'Wrong Request Method used.'
     
 
 # Create your views here.
+"""

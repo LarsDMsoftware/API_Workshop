@@ -20,7 +20,7 @@ from petAPI.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('pet/<str:id>/',pet_by_ID),
+    path('pet/<str:id>/',get_pet_by_ID),
     path('pet/', get_pet_list),
 
 ]
