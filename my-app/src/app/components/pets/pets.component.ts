@@ -20,13 +20,13 @@ export class PetsComponent implements OnInit {
     this.petForm = this.formBuilder.group({
 
       petId: ['', Validators.required],
-     
+      petName:['', Validators.required]
       });
     this.onLoad();
   }
   getId() {
 
-    this.petService.getPetById(this.petForm.get('petId')?.value) .subscribe({
+    this.petService.getPetById(this.petForm.get('petId')?.value).subscribe({
     
     next: (data: any) => {
     
@@ -36,7 +36,7 @@ export class PetsComponent implements OnInit {
     
     error: (error: any) => {
     
-    this.response = error.error;
+    this.response = error.message;
     
     }
     
@@ -45,7 +45,7 @@ export class PetsComponent implements OnInit {
     }
     getName() {
 
-      this.petService.getPetByName(this.petForm.get('petName')?.value) .subscribe({
+      this.petService.getPetByName(this.petForm.get('petName')?.value).subscribe({
       
       next: (data: any) => {
       
@@ -55,7 +55,7 @@ export class PetsComponent implements OnInit {
       
       error: (error: any) => {
       
-      this.response = error.error;
+      this.response = error.message;
       
       }
       
@@ -64,8 +64,8 @@ export class PetsComponent implements OnInit {
       }
   onLoad(){
     this.petService.getPets().subscribe({
-      next: (data:any)=>{this.response = data;},
-      error: (error:any)=>{this.response = error.error;}
+      next: (data:any)=>{this.response = data.value;},
+      error: (error:any)=>{this.response = error.message;}
     })
   }
 

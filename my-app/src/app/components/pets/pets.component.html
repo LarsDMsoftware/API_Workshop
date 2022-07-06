@@ -1,17 +1,19 @@
-<div class="container">
+<form [formGroup]="petForm" class="form-group">
 
-    <form [formGroup]="petForm"  class="form-group">
-    
     <div class="form-group content">
-    
-    <label class="login-form-label">Pet Id: </label>
-    <input class="form-control" type="number" placeholder="Enter a pet ID" id="petid" formControlName="petId" data-cy="petId">
-    <button class="btn-primary" (click)=getId() data-cy="login">Submit</button>
-    <br/>
-    <label class="login-form-label">Pet Name: </label>
-    <input class="form-control" type="string" placeholder="Enter a pet name" id="petname" formControlName="petName" data-cy="petName">
-    <button class="btn-primary" (click)=getName() data-cy="login">Submit</button>
-</div>
- </form> <div> <pre *ngIf="response">{{response}}</pre> </div>
 
+        <label class="login-form-label">Pet Id: </label>
+        <input class="form-control" type="number" placeholder="Enter a pet ID" id="petid" formControlName="petId"
+            data-cy="petId">
+        <button class="btn-primary" (click)=getId() data-cy="login">Get Pet by ID</button>
+        <br />
+        <label class="login-form-label">Pet Name: </label>
+        <input class="form-control" type="text" placeholder="Enter a pet name" id="petname" formControlName="petName"
+            data-cy="petName">
+        <button class="btn-primary" (click)=getName() data-cy="login">Get Pet by Name</button>
+    </div>
+</form>
+
+<div id="ng-if" *ngIf="response">
+    <pre>{{response | json}}</pre>
 </div>
