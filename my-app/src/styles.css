@@ -1,0 +1,24 @@
+:root{
+    --main-color:#1f6585 !important;
+    --secondary-color:#468978;
+}
+.btn{
+    background-color: var(--secondary-color);
+    border:none;
+    color:white;
+    margin-bottom: 2rem;
+}
+.btn:hover, .btn:focus{
+    background-color: var(--main-color);
+    color:white;
+}
+.container{
+    margin-top: 5rem;
+}
+.form-group{
+    margin-bottom: 2rem;
+}
+.btn:disabled{
+    background-color:#babbbb;
+    color:white;
+}
